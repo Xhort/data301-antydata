@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indigenous Population Composition</title>
+  <script src="https://cdn.plot.ly/plotly-4.1.1.min.js"></script>
+</head>
+<body>
+  <div id="donuts" style="width: 100%; height: 450px;"></div>
+  <script>
+    const labels = ['First Nations', 'Inuit', 'Métis'];
+    const colors = ['#1f77b4', '#ff7f0e', '#2ca02c'];
+    const locations = [
+      {name: 'Ontario', total: 470620, values: [332555, 6290, 131775]},
+      {name: 'Quebec', total: 350825, values: [288525, 18025, 44275]},
+      {name: 'Alberta', total: 308005, values: [188315, 4235, 115455]}
+    ];
+    const domains = [[0, 0.30], [0.35, 0.65], [0.70, 1]];
+    const traces = locations.map((location, index) => ({
+      type: 'pie',
+      labels,
+      values: location.values,
+      hole: 0.45,
+      sort: false,
+      domain: {row: 0, column: index, x: domains[index], y: [0, 0.62]},
+      marker: {colors},
+      textinfo: 'percent',
+      textposition: 'inside',
+      insidetextorientation: 'radial',
+      hovertemplate: '%{label}<br>%{value:,.0f}<br>%{percent}<extra></extra>',
+      showlegend: index === 0
+    }));
+    const annotations = locations.map((location, index) => ({
+      x: (domains[index][0] + domains[index][1]) / 2,
+      y: 0.74,
+      xref: 'paper',
+      yref: 'paper',
+      text: `<b>${location.name}</b><br>${location.total.toLocaleString()} Indigenous people`,
+      showarrow: false,
+      align: 'center'
+    }));
+    Plotly.newPlot('donuts', traces, {
+      title: {text: 'Indigenous Population Composition in the Three Largest Populations', x: 0.5, y: 0.98},
+      grid: {rows: 1, columns: 3},
+      annotations,
+      legend: {title: {text: 'Indigenous Group'}, orientation: 'h', x: 0.5, xanchor: 'center', y: -0.05},
+      margin: {t: 105, b: 65, l: 20, r: 20}
+    }, {responsive: true, displaylogo: false});
+  </script>
+</body>
+</html>
