@@ -1,6 +1,6 @@
 # DATA 301 Interactive Visualizations
 
-Static assignment website for `data301.antydata.com`.
+Static assignment website for `data301.celeriter.org`.
 
 ## Cloudflare Pages settings
 
